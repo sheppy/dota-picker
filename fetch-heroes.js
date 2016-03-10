@@ -29,14 +29,23 @@ function fetchMatchUpData(hero) {
         try {
             x(`https://www.dotabuff.com/heroes/${id}/matchups`, {
                 name: ".image-avatar@alt",
+                winRate: ".header-content-secondary .won",
+                popularity: ".header-content-secondary dl:nth-child(1) dd:nth-child(1)",
                 matchups: x(".sortable tbody tr", [{
                     name: "td:nth-child(1)@data-value",
                     advantage: "td:nth-child(3)@data-value"
+                }]),
+                lanes: x(".col-8 > section:nth-of-type(1) tbody tr", [{
+                    lane: "td:nth-child(1)",
+                    presence: "td:nth-child(2)@data-value",
+                    winRate: "td:nth-child(3)@data-value"
                 }])
             })(function(err, obj) {
                 if (err) return reject(err);
                 console.log(" + Fetched", id);
                 obj.id = id;
+                obj.winRate = parseFloat(obj.winRate);
+                obj.popularity = parseInt(obj.winRate, popularity);
                 resolve(obj);
             })
         }
@@ -53,6 +62,7 @@ function fetchDotaBuffMatchups(heroes) {
         // Merge the data back with heroes
         let hero = heroes.find(hero => hero.name == dotabuffHero.name);
         hero.matchups = dotabuffHero.matchups;
+        hero.lanes = dotabuffHero.lanes;
         return hero;
     })
 }
