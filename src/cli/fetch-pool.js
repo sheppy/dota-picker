@@ -13,7 +13,7 @@ var x = Xray()
 
 
 function fetchHeroPool() {
-    return Utilities.loadJson("players.json")
+    return Utilities.loadJson("lib/players.json")
         .then(function(players) {
             return players.reduce(function (pool, player) {
                 player.canPlay.forEach(function(heroName) {
@@ -27,11 +27,11 @@ function fetchHeroPool() {
 }
 
 function saveHeroesJson(heroes) {
-    return Utilities.saveJson("pool.json", heroes);
+    return Utilities.saveJson("lib/pool.json", heroes);
 }
 
 function fetchPlayers(heroPool) {
-    return Utilities.loadJson("players.json")
+    return Utilities.loadJson("lib/players.json")
         .then(function(players) {
             // Merge in the player in to each entry in the pool
             return Promise.each(heroPool, hero => hero.players = JSON.parse(JSON.stringify(players)))

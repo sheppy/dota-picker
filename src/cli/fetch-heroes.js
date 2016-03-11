@@ -17,7 +17,7 @@ function fetchHeroList() {
 }
 
 function saveHeroesJson(heroes) {
-    return Utilities.saveJson("heroes.json", heroes);
+    return Utilities.saveJson("lib/heroes.json", heroes);
 }
 
 function fetchMatchUpData(hero) {
@@ -45,7 +45,7 @@ function fetchMatchUpData(hero) {
                 console.log(" + Fetched", id);
                 obj.id = id;
                 obj.winRate = parseFloat(obj.winRate);
-                obj.popularity = parseInt(obj.winRate, popularity);
+                obj.popularity = parseInt(obj.winRate, obj.popularity);
                 resolve(obj);
             })
         }
