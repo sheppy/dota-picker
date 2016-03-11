@@ -20,6 +20,13 @@ class Draft {
                     .reduce((roles, hero) => roles.concat(hero.roles), [])
                     .filter((item, pos, self) => self.indexOf(item) === pos)
                     .sort();
+
+                // Convert all matchup advantages to floats
+                this.heroes.forEach((hero) => {
+                    hero.matchups.forEach((matchup) => {
+                        matchup.advantage = parseFloat(matchup.advantage);
+                    })
+                })
             })
             .then(() => { return Utilities.loadJson("pool.json"); })
             .then((heroes) => { this.pool = heroes; })
@@ -51,20 +58,20 @@ class Draft {
     }
 
     _getBans(team) {
-        team.bans = team.heroes
+        team.bans = team.heroes.slice(0)
             .reduce((bannedHeroes, teamHero) => {
                 // Get the bans for this hero
                 let badForThisHero = teamHero.matchups
-                    .filter(matchup => parseFloat(matchup.advantage) < 0)
+                    .filter(matchup => matchup.advantage < 0)
                     .filter(hero => !team.heroes.find(teamHero => hero.name === teamHero.name));
 
                 badForThisHero.forEach(function(banHero) {
                     let alreadyBannedHero = bannedHeroes.find(hero => hero.name === banHero.name);
                     if (!alreadyBannedHero) {
-                        bannedHeroes.push(banHero);
+                        bannedHeroes.push(Object.assign({}, banHero));
                     } else {
                         // Update it possibly!
-                        if (parseFloat(banHero.advantage) > parseFloat(alreadyBannedHero.advantage)) {
+                        if (banHero.advantage > alreadyBannedHero.advantage) {
                             alreadyBannedHero.advantage = banHero.advantage;
                         }
                     }
@@ -72,9 +79,7 @@ class Draft {
 
                 return bannedHeroes;
             }, [])
-            .sort(function(a, b) {
-                return parseFloat(a.advantage) - parseFloat(b.advantage)
-            });
+            .sort((a, b) => a.advantage - b.advantage);
     }
 
     _getBansCombined(team) {
@@ -82,23 +87,21 @@ class Draft {
             .reduce((bannedHeroes, teamHero) => {
                 // Get the bans for this hero
                 let badForThisHero = teamHero.matchups
-                    .filter(matchup => parseFloat(matchup.advantage) < 0)
+                    .filter(matchup => matchup.advantage < 0)
                     .filter(hero => !team.heroes.find(teamHero => hero.name === teamHero.name));
 
                 badForThisHero.forEach(function(banHero) {
                     let alreadyBannedHero = bannedHeroes.find(hero => hero.name === banHero.name);
                     if (!alreadyBannedHero) {
-                        bannedHeroes.push(banHero);
+                        bannedHeroes.push(Object.assign({}, banHero));
                     } else {
-                        alreadyBannedHero.advantage = parseFloat(alreadyBannedHero.advantage) + parseFloat(banHero.advantage);
+                        alreadyBannedHero.advantage = alreadyBannedHero.advantage + banHero.advantage;
                     }
                 });
 
                 return bannedHeroes;
             }, [])
-            .sort(function(a, b) {
-                return parseFloat(a.advantage) - parseFloat(b.advantage)
-            });
+            .sort((a, b) => a.advantage - b.advantage);
     }
 
     _whoPlaysWho() {
