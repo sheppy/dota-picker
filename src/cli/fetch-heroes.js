@@ -1,6 +1,6 @@
 "use strict";
 
-var Utilities = require("./src/Utilities");
+var Utilities = require("./../Utilities");
 
 var Promise = require("bluebird");
 var Xray = require("x-ray");

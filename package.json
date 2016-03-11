@@ -20,9 +20,7 @@
   "devDependencies": {
     "bluebird": "^3.3.3",
     "request-promise": "^2.0.1",
-    "x-ray": "^2.0.3"
-  },
-  "dependencies": {
-    "bluebird": "^3.3.3"
+    "x-ray": "^2.0.3",
+    "munkres-js": "^1.1.3"
   }
 }

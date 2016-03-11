@@ -1,0 +1,33 @@
+[
+    {
+        "dotabuffId": 1,
+        "name": "Player 1",
+        "canPlay": [
+            "Anti-Mage",
+            "Phantom Assassin"
+        ]
+    },
+    {
+        "dotabuffId": 2,
+        "name": "Player 2",
+        "canPlay": [
+            "Drow Ranger",
+            "Witch Doctor"
+        ]
+    },
+    {
+        "dotabuffId": 3,
+        "name": "Player 3",
+        "canPlay": []
+    },
+    {
+        "dotabuffId": 4,
+        "name": "Player 4",
+        "canPlay": []
+    },
+    {
+        "dotabuffId": 5,
+        "name": "Player 5",
+        "canPlay": []
+    }
+]

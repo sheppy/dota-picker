@@ -1,6 +1,6 @@
 "use strict";
 
-var Utilities = require("./src/Utilities");
+var Utilities = require("../Utilities");
 
 var Promise = require("bluebird");
 var Xray = require("x-ray");
@@ -13,7 +13,17 @@ var x = Xray()
 
 
 function fetchHeroPool() {
-    return Utilities.loadJson("_pool.json");
+    return Utilities.loadJson("players.json")
+        .then(function(players) {
+            return players.reduce(function (pool, player) {
+                player.canPlay.forEach(function(heroName) {
+                    if (!pool.find((hero) => hero.name === heroName)) {
+                        pool.push({ name: heroName });
+                    }
+                });
+                return pool;
+            }, []);
+        });
 }
 
 function saveHeroesJson(heroes) {
@@ -21,7 +31,7 @@ function saveHeroesJson(heroes) {
 }
 
 function fetchPlayers(heroPool) {
-    return Utilities.loadJson("_players.json")
+    return Utilities.loadJson("players.json")
         .then(function(players) {
             // Merge in the player in to each entry in the pool
             return Promise.each(heroPool, hero => hero.players = JSON.parse(JSON.stringify(players)))
