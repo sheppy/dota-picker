@@ -5,7 +5,8 @@ import { requestData } from "../actions/api";
 
 import Bans from "../components/Bans.jsx";
 import Picks from "../components/Picks.jsx";
-import AllHeroes from "../components/AllHeroes.jsx";
+import HeroGrid from "../components/HeroGrid.jsx";
+import FilterableHeroGrid from "../components/FilterableHeroGrid.jsx";
 
 
 function mapStateToProps(state) {
@@ -20,11 +21,16 @@ class DraftPage extends React.Component {
     }
 
     render() {
+        if (!this.props.pool || !this.props.pool.size) {
+            return (<div>Loading...</div>);
+        }
+
         return (
             <div>
                 <Bans />
                 <Picks />
-                <AllHeroes heroes={this.props.pool}/>
+                <p>Pool:</p>
+                <FilterableHeroGrid heroes={this.props.heroes}/>
             </div>
         )
     }
