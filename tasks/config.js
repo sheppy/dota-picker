@@ -3,6 +3,7 @@ export default {
         html: "**/*.html",
         css: "**/*.css",
         scss: "**/*.scss",
+        scssPartial: "**/_*.scss",
         js: "**/*.js",
         jsx: "**/*.jsx",
         json: "**/*.json"
@@ -12,7 +13,9 @@ export default {
         dist: "lib",
         test: "test",
         tasks: "tasks",
-        coverage: "coverage"
+        coverage: "coverage",
+        scss: "scss",
+        css: "css"
     },
     file: {
         indexJs: "index.js",

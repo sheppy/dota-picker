@@ -1,0 +1,23 @@
+.Hero {
+    > img {
+        display: block;
+    }
+
+    &.is-selected {
+        opacity: 0.5;
+    }
+}
+
+.HeroGrid {
+    list-style: none;
+    padding: 0;
+    overflow: hidden;
+
+    > li {
+        float: left;
+        margin: 2px;
+        width: 59px;
+        height: 33px;
+        overflow: hidden;
+    }
+}

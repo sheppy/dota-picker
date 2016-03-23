@@ -1,7 +1,19 @@
 import React from "react";
+import ImmutablePropTypes from "react-immutable-proptypes";
+import classNames from "classnames";
 
 
 class Hero extends React.Component {
+    static propTypes = {
+        hero: ImmutablePropTypes.map.isRequired,
+        onClick: React.PropTypes.func,
+        showSelected: React.PropTypes.bool
+    };
+
+    shouldComponentUpdate(nextProps) {
+        return this.props.hero !== nextProps.hero;
+    }
+
     getHeroImage(name) {
         let image = name.toLowerCase().replace(/([^a-z])/g, "_");
 
@@ -35,9 +47,16 @@ class Hero extends React.Component {
         // const image = `http://cdn.dota2.com/apps/dota2/images/heroes/${this.getHeroImage(name)}_hphover.png`;
         const image = `http://cdn.dota2.com/apps/dota2/images/heroes/${this.getHeroImage(name)}_sb.png`;
 
+        const heroClass = classNames({
+            Hero: true,
+            "is-selected": this.props.showSelected && this.props.hero.get("selected")
+        });
+
+        const onClick = this.props.onClick ? this.props.onClick.bind(null, this.props.hero) : null;
+
         return (
-            <div className="Hero">
-                <img src={image} alt={name} title={name}/>
+            <div className={heroClass}>
+                <img src={image} alt={name} title={name} onClick={onClick}/>
             </div>
         )
     }

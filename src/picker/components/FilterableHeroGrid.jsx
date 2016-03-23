@@ -7,7 +7,9 @@ import HeroGrid from "./HeroGrid.jsx";
 
 class FilterableHeroGrid extends React.Component {
     static propTypes = {
-        heroes: ImmutablePropTypes.list.isRequired
+        heroes: ImmutablePropTypes.list.isRequired,
+        onClick: React.PropTypes.func,
+        showSelected: React.PropTypes.bool
     };
 
     constructor(props) {
@@ -33,7 +35,7 @@ class FilterableHeroGrid extends React.Component {
         return (
             <div>
                 <SearchBar filterText={this.state.filterText} onChange={this.onFilterChange.bind(this)}/>
-                <HeroGrid heroes={filteredHeroes}/>
+                <HeroGrid heroes={filteredHeroes} onClick={this.props.onClick} showSelected={this.props.showSelected}/>
             </div>
         )
     }

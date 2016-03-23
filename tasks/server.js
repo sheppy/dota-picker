@@ -39,5 +39,5 @@ gulp.task("server", () => {
         ]
     });
 
-    //gulp.watch([path.join(config.dir.src, "**/*.scss")], ["css"]);
+    gulp.watch(path.join(config.dir.src, config.dir.scss, config.glob.scss), ["css"]);
 });
